@@ -1,19 +1,25 @@
 package easy;
-
+class ListNode2 {
+    int val;
+    ListNode2 next;
+    ListNode2() {}
+    ListNode2(int val) { this.val = val; }
+    ListNode2(int val, ListNode2 next) { this.val = val; this.next = next; }
+}
 public class 反转链表 {
-    public ListNode reverseList(ListNode head) {
+    public ListNode2 reverseList(ListNode2 head) {
         if(head==null) return null;
-        if(head.next=null) return head;
+        if(head.next == null) return head;
 
-        ListNode pre=null; //保存前一个结点
-        ListNode cur=head; //当前访问的结点
-        while (curr != null) {
-            ListNode next = curr.next; //防止后一个结点丢失
-            curr.next = prev;
-            prev = curr;
-            curr = next;
+        ListNode2 pre=null; //保存前一个结点
+        ListNode2 cur=head; //当前访问的结点
+        while (cur != null) {
+            ListNode2 next = cur.next; //防止后一个结点丢失
+            cur.next = pre;
+            pre = cur;
+            cur = next;
         }
-        return prev;
+        return pre;
 
     }
 }
