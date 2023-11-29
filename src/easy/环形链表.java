@@ -1,4 +1,4 @@
-import java.util.List;
+package easy;
 
 class ListNode3 {
     int val;
