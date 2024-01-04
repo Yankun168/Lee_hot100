@@ -1,7 +1,9 @@
+package midd;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class test {
+public class 括号生成 {
     public List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<String>();
         //StringBuilder()方便对字符串进行修改。当栈用
@@ -28,9 +30,5 @@ public class test {
             backtrack(ans, cur, open, close + 1, max);
             cur.deleteCharAt(cur.length() - 1);
         }
-    }
-    public static void main(String[] args) {
-        test t=new test();
-        System.out.println(t.generateParenthesis(2));
     }
 }
