@@ -1,36 +1,49 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class test {
-    public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList<String>();
-        //StringBuilder()方便对字符串进行修改。当栈用
-        //左括号0个，右括号0个，总共n对括号
-        backtrack(ans, new StringBuilder(), 0, 0, n);
-        return ans;
+    public String decodeString(String s) {
+        //存储当前正在解码的部分
+        StringBuilder res = new StringBuilder();
+        int multi = 0;
+        //用于保存 multi 和 res 的中间状态。
+        LinkedList<Integer> stack_multi = new LinkedList<>();
+        LinkedList<String> stack_res = new LinkedList<>();
+        //遍历输入的s
+        for (Character c : s.toCharArray()) {
+            //遇到左括号
+            if (c == '[') {
+                //两个元素入栈
+                stack_multi.addLast(multi);
+                stack_res.addLast(res.toString());
+                //分别变为空
+                multi = 0;
+                res = new StringBuilder();
+            }
+            //遇到右括号
+            else if (c == ']') {
+                StringBuilder tmp = new StringBuilder();
+                int cur_multi = stack_multi.removeLast();
+                for (int i = 0; i < cur_multi; i++) {
+                    tmp.append(res);
+                }
+                res = new StringBuilder(stack_res.removeLast() + tmp);
+            }
+            //遇到数字
+            else if (c >= '0' && c <= '9') {
+                //Integer.parseInt的参数为string类型，而c是字符类型
+                //c + ""为字符串类型
+                multi = multi * 10 + Integer.parseInt(c + "");
+            }
+            //遇到字符
+            else {
+                res.append(c);
+            }
+        }
+        return res.toString();
     }
 
-    public void backtrack(List<String> ans, StringBuilder cur, int open, int close, int max) {
-        if (cur.length() == max * 2) {
-            //注意别忘记toString
-            ans.add(cur.toString());
-            return;
-        }
-        //左括号：能加就一直加
-        if (open < max) {
-            cur.append('(');
-            backtrack(ans, cur, open + 1, close, max);
-            cur.deleteCharAt(cur.length() - 1);
-        }
-        //右括号：数量比左括号少的时候加
-        if (close < open) {
-            cur.append(')');
-            backtrack(ans, cur, open, close + 1, max);
-            cur.deleteCharAt(cur.length() - 1);
-        }
-    }
     public static void main(String[] args) {
-        test t=new test();
-        System.out.println(t.generateParenthesis(2));
+        test t = new test();
+        System.out.println(t.decodeString("3[a]2[bc]"));
     }
 }
